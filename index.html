@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>C HOUSE - Italian bistro · bar · lounge</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap');
+
+    [hidden] { display: none !important; }
+
+#mora-page {
+  --mora-clay: #A84F37;
+  --mora-terracotta: #C76D4D;
+  --mora-olive: #29372D;
+  --mora-espresso: #30201B;
+  --mora-stone: #B7A48E;
+  --mora-parchment: #E7D8C0;
+  --mora-brass: #AA8243;
+  --mora-candle: #F2E7D4;
+  font-family: 'Manrope', sans-serif;
+  background: var(--mora-parchment);
+  color: var(--mora-espresso);
+  scroll-behavior: smooth;
+}
+#mora-page .mora-serif { font-family: 'DM Serif Display', Georgia, serif; }
+#mora-page .mora-sans { font-family: 'Manrope', sans-serif; }
+#mora-page .mora-kicker { letter-spacing: .2em; font-size: 10px; line-height: 1.2; font-weight: 700; text-transform: uppercase; }
+#mora-page .mora-nav { transition: background-color .35s ease, color .35s ease; }
+#mora-page .mora-nav.is-scrolled { background: var(--mora-olive); color: var(--mora-candle); }
+#mora-page .mora-nav-line { transition: border-color .35s ease; }
+#mora-page .mora-nav.is-scrolled .mora-nav-line { border-color: rgba(242,231,212,.2); }
+#mora-page .mora-primary,
+#mora-page .mora-light-button,
+#mora-page .mora-outline-button,
+#mora-page .mora-text-action,
+#mora-page .mora-nav-link,
+#mora-page .mora-menu-button,
+#mora-page .mora-gallery-item,
+#mora-page .mora-social-item,
+#mora-page .mora-food-row,
+#mora-page .mora-occasion-row { transition: background-color .25s ease, border-color .25s ease, color .25s ease, opacity .25s ease, transform .25s ease; }
+#mora-page .mora-primary { background: var(--mora-clay); color: var(--mora-espresso); }
+#mora-page .mora-primary:hover { background: var(--mora-espresso); color: var(--mora-candle); }
+#mora-page .mora-outline-button:hover { background: var(--mora-espresso); color: var(--mora-candle); }
+#mora-page .mora-light-button:hover { background: var(--mora-clay); border-color: var(--mora-clay); color: var(--mora-candle); }
+#mora-page .mora-text-action { display: inline-flex; align-items: center; gap: 12px; border-bottom: 1px solid currentColor; padding-bottom: 7px; }
+#mora-page .mora-text-action i { transition: transform .25s ease; }
+#mora-page .mora-text-action:hover i { transform: translate(4px,-4px); }
+#mora-page .mora-text-action:hover { color: var(--mora-clay); }
+#mora-page .mora-nav-link { position: relative; }
+#mora-page .mora-nav-link:after { content: ''; position: absolute; bottom: -7px; left: 0; height: 1px; width: 0; background: currentColor; transition: width .25s ease; }
+#mora-page .mora-nav-link:hover:after,
+#mora-page .mora-nav-link:focus-visible:after { width: 100%; }
+#mora-page .mora-fold { position: relative; overflow: hidden; }
+#mora-page .mora-fold:after { content: ''; position: absolute; right: 0; bottom: 0; width: 0; height: 0; border-style: solid; border-width: 0 0 27px 27px; border-color: transparent transparent var(--mora-parchment) transparent; pointer-events: none; }
+#mora-page .mora-fold-candle:after { border-color: transparent transparent var(--mora-candle) transparent; }
+#mora-page .mora-fold-clay:after { border-color: transparent transparent var(--mora-clay) transparent; }
+#mora-page .mora-hero-image { animation: mora-hero-drift 20s ease-in-out infinite alternate; }
+#mora-page .mora-hero-shade { background: var(--mora-espresso); opacity: .38; }
+#mora-page .mora-reveal { opacity: 0; transform: translateY(20px); }
+#mora-page .mora-reveal.is-visible { animation: mora-reveal-up .7s cubic-bezier(.22,.8,.28,1) forwards; animation-delay: var(--mora-delay, 0ms); }
+#mora-page .mora-reveal-mask { overflow: hidden; }
+#mora-page .mora-reveal-mask > span { display: block; transform: translateY(105%); }
+#mora-page .mora-reveal-mask.is-visible > span { animation: mora-line-up .7s cubic-bezier(.22,.8,.28,1) forwards; animation-delay: var(--mora-delay, 0ms); }
+#mora-page .mora-photo-frame { border: 1px solid var(--mora-espresso); background: var(--mora-stone); }
+#mora-page .mora-photo-frame img,
+#mora-page .mora-gallery-item img,
+#mora-page .mora-social-item img { transition: transform .45s cubic-bezier(.22,.8,.28,1), filter .3s ease; }
+#mora-page .mora-photo-frame:hover img,
+#mora-page .mora-gallery-item:hover img,
+#mora-page .mora-gallery-item:focus-visible img,
+#mora-page .mora-social-item:hover img,
+#mora-page .mora-social-item:focus-visible img { transform: scale(1.02); }
+#mora-page .mora-food-row { border-top: 1px solid rgba(242,231,212,.35); text-align: left; }
+#mora-page .mora-food-row:last-child { border-bottom: 1px solid rgba(242,231,212,.35); }
+#mora-page .mora-food-row:hover,
+#mora-page .mora-food-row.is-active { color: var(--mora-candle); }
+#mora-page .mora-food-row.is-active .mora-food-number { color: var(--mora-brass); }
+#mora-page .mora-food-row.is-active .mora-food-rule { background: var(--mora-brass); }
+#mora-page .mora-food-rule { transition: background-color .25s ease; }
+#mora-page .mora-image-changing { opacity: .18; }
+#mora-page .mora-bar-line { stroke: var(--mora-espresso); stroke-width: 1.1; fill: none; opacity: .42; }
+#mora-page .mora-gallery-scroller { scrollbar-width: none; }
+#mora-page .mora-gallery-scroller::-webkit-scrollbar { display: none; }
+#mora-page .mora-gallery-item { position: relative; overflow: hidden; text-align: left; }
+#mora-page .mora-gallery-item:focus-visible,
+#mora-page .mora-social-item:focus-visible { outline: 2px solid var(--mora-brass); outline-offset: 4px; }
+#mora-page .mora-gallery:hover .mora-gallery-item:not(:hover) img { filter: saturate(.72); }
+#mora-page .mora-gallery-item:hover .mora-gallery-caption,
+#mora-page .mora-gallery-item:focus-visible .mora-gallery-caption { color: var(--mora-clay); }
+#mora-page .mora-gallery-caption { transition: color .25s ease; }
+#mora-page .mora-occasion-row { border-top: 1px solid rgba(48,32,27,.42); text-align: left; }
+#mora-page .mora-occasion-row:last-child { border-bottom: 1px solid rgba(48,32,27,.42); }
+#mora-page .mora-occasion-row:hover,
+#mora-page .mora-occasion-row.is-active { color: var(--mora-clay); }
+#mora-page .mora-occasion-row.is-active .mora-occasion-time { color: var(--mora-clay); }
+#mora-page .mora-occasion-row.is-active .mora-occasion-marker { transform: scaleX(1); }
+#mora-page .mora-occasion-marker { transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+#mora-page .mora-social-item { position: relative; overflow: hidden; border: 1px solid var(--mora-espresso); background: var(--mora-stone); }
+#mora-page .mora-social-item .mora-social-caption { opacity: 0; transition: opacity .25s ease; }
+#mora-page .mora-social-item:hover .mora-social-caption,
+#mora-page .mora-social-item:focus-visible .mora-social-caption { opacity: 1; }
+#mora-page .mora-map-panel { background-color: var(--mora-stone); }
+#mora-page .mora-drawer,
+#mora-page .mora-scrim,
+#mora-page .mora-mobile-menu,
+#mora-page .mora-reserve-dock { transition: transform .35s cubic-bezier(.22,.8,.28,1), opacity .3s ease, background-color .3s ease; }
+#mora-page .mora-drawer { transform: translateX(105%); }
+#mora-page .mora-drawer.is-open { transform: translateX(0); }
+#mora-page .mora-scrim { opacity: 0; pointer-events: none; }
+#mora-page .mora-scrim.is-open { opacity: 1; pointer-events: auto; }
+#mora-page .mora-mobile-menu { opacity: 0; pointer-events: none; transform: translateY(-16px); }
+#mora-page .mora-mobile-menu.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+#mora-page .mora-reserve-dock { transform: translateY(120%); }
+#mora-page .mora-reserve-dock.is-visible { transform: translateY(0); }
+body.mora-lock { overflow: hidden; }
+#mora-page .mora-loading-rule { width: 0; }
+#mora-page .mora-loading-rule.is-loading { animation: mora-load-rule 1s ease-in-out infinite alternate; }
+#mora-page .mora-input { border: 1px solid rgba(242,231,212,.38); background: transparent; color: var(--mora-candle); border-radius: 2px; }
+#mora-page .mora-input:focus { border-color: var(--mora-terracotta); outline: 2px solid var(--mora-terracotta); outline-offset: 2px; }
+#mora-page .mora-input option { background: var(--mora-olive); color: var(--mora-candle); }
+#mora-page .mora-lightbox-image { max-height: 78vh; max-width: min(78vw, 1040px); object-fit: contain; }
+#mora-page .mora-menu-link { transition: color .25s ease, border-color .25s ease; }
+#mora-page .mora-menu-link:hover { color: var(--mora-terracotta); border-color: var(--mora-terracotta); }
+@keyframes mora-hero-drift { from { transform: scale(1.02) translate3d(0,0,0); } to { transform: scale(1.07) translate3d(-1.5%, -1%, 0); } }
+@keyframes mora-reveal-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mora-line-up { from { transform: translateY(105%); } to { transform: translateY(0); } }
+@keyframes mora-load-rule { from { width: 12%; } to { width: 100%; } }
+@media (max-width: 767px) {
+  #mora-page .mora-hero-image { object-position: 58% center; }
+  #mora-page .mora-hero-shade { background: var(--mora-espresso); opacity: .38; }
+  #mora-page .mora-drawer { transform: translateY(105%); }
+  #mora-page .mora-drawer.is-open { transform: translateY(0); }
+  #mora-page .mora-lightbox-image { max-height: 70vh; max-width: 90vw; }
+  #mora-page .mora-social-item .mora-social-caption { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #mora-page { scroll-behavior: auto; }
+  #mora-page .mora-hero-image { animation: none; }
+  #mora-page .mora-reveal { opacity: 1; transform: none; }
+  #mora-page .mora-reveal-mask > span { transform: none; }
+  #mora-page .mora-reveal-mask.is-visible > span { animation: none; }
+  #mora-page .mora-reveal.is-visible { animation: none; }
+  #mora-page .mora-photo-frame img,
+  #mora-page .mora-gallery-item img,
+  #mora-page .mora-social-item img { transition: none; }
+}
+  </style>
+<style>
+@media print {
+  section {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+  #home {
+    break-before: auto !important;
+    page-break-before: auto !important;
+  }
+  /* Explicitly hide all floating/fixed navigation and UI elements in print */
+  #mora-nav, header, footer, .mora-scrim, .mora-drawer, .mora-mobile-menu, .mora-lightbox, .mora-reserve-dock {
+    display: none !important;
+  }
+  /* Prevent any section backgrounds from bleeding out of their bounds */
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+</style>
+<link data-kid="1" data-name="Google Fonts stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/tabler-icons.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div id="root">
+<div class="mora-sans overflow-x-clip bg-[var(--mora-parchment)] text-[var(--mora-espresso)]" data-kid="2" data-name="main page container" id="mora-page">
+<header aria-label="Primary navigation" class="absolute inset-x-0 top-0 z-50 pt-6 px-5 sm:px-8 lg:px-12 text-[#f5e6c8]" data-kid="2-1" data-name="primary navigation header" id="mora-nav">
+<div class="mx-auto flex h-[72px] max-w-[1360px] items-center justify-center relative" data-kid="2-1-1" data-name="navigation bar layout container">
+<div class="absolute left-0 flex items-center">
+<a aria-label="home" class="flex items-center text-[#f5e6c8] gap-4" href="#">
+<img src="./logo.png" class="h-28 w-auto object-contain -ml-4" alt="Logo">
+<span class="font-sans text-[32px] tracking-[0.2em] font-light">C HOUSE</span>
+</a>
+</div>
+<nav aria-label="Main links" class="hidden items-center gap-1 rounded-full bg-black/30 px-3 py-1.5 lg:flex backdrop-blur-md border border-white/10" data-kid="2-1-1-2" data-name="main navigation links container">
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#food">Menu</a>
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#story">About</a>
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#bar">Bar</a>
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#experience">Experience</a>
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#gallery">Gallery</a>
+<a class="flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] tracking-widest uppercase text-gray-200 transition-colors hover:bg-white/10 hover:text-white" href="#contact">Contact</a>
+</nav>
+</div>
+</header>
+<main data-kid="2-2" data-name="main content area">
+<section aria-labelledby="hero-heading" class="relative min-h-[100svh] overflow-hidden bg-black text-[#f5e6c8] flex flex-col items-center justify-center" data-kid="2-2-1" data-name="hero section" id="home">
+<div class="absolute inset-0" data-kid="2-2-1-1" data-name="hero image background container">
+<!-- Using a coffee pouring image placeholder to match the aesthetic -->
+<img alt="Hero image" class="h-full w-full object-cover" decoding="async" loading="lazy" src="./hero.png"/>
+<div class="absolute inset-0 bg-black/20"></div>
+</div>
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10">
+<a class="text-[#f5e6c8] hover:text-white transition-colors mt-2" href="#food">
+<svg fill="none" height="36" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+<polyline points="4 8 12 16 20 8"></polyline>
+</svg>
+</a>
+</div>
+<div class="hidden lg:flex absolute bottom-12 left-12 z-20 flex-col gap-7 max-w-[600px]">
+<div class="flex items-center gap-10">
+<div class="flex flex-col gap-1 shrink-0">
+<span class="text-white text-[32px] font-bold leading-none">4.9 <span class="text-yellow-500 text-[26px] align-baseline">★</span></span>
+<span class="text-gray-300 text-[13px]">Google Rating</span>
+</div>
+<div class="flex flex-col gap-2 text-white text-[15px] font-medium tracking-wide">
+<p>Italian Bistro &nbsp;<span class="text-gray-400 font-light">|</span>&nbsp; Crafted Cocktails &nbsp;<span class="text-gray-400 font-light">|</span>&nbsp; Shisha</p>
+<p>Live Entertainment &nbsp;<span class="text-gray-400 font-light">|</span>&nbsp; Chef's Specials</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<a href="#contact" class="bg-white text-black text-[13px] font-semibold rounded-full py-3 px-6 hover:bg-gray-200 transition-colors whitespace-nowrap">
+Reserve a Table
+</a>
+<a href="#contact" class="flex items-center justify-center bg-white text-black w-11 h-11 rounded-full hover:bg-gray-200 transition-colors">
+<i class="ti ti-arrow-up-right text-lg"></i>
+</a>
+</div>
+<p class="text-gray-300 text-[12px] leading-relaxed">
+Experience authentic Italian dining that brings people together - your gateway to memorable evenings.
+</p>
+</div>
+</div>
+<div class="hidden lg:flex absolute bottom-12 -right-[190px] z-20 flex-col items-start gap-4">
+<div class="flex gap-4">
+<div class="flex-none flex items-center gap-4 p-3 rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 w-[380px] shadow-2xl">
+<img src="./food.png" class="w-[120px] h-[140px] rounded-[16px] object-cover" alt="Truffle Tagliatelle">
+<div class="flex flex-col gap-2">
+<h3 class="text-white text-lg font-semibold leading-tight">Truffle Tagliatelle</h3>
+<p class="text-gray-300 text-[11px] leading-snug">Hand-made daily with fresh black truffles and parmesan.</p>
+<button class="bg-white text-black text-[11px] font-bold rounded-full py-2 px-5 w-fit mt-1 hover:bg-gray-200 transition-colors">View Details</button>
+</div>
+</div>
+<div class="flex-none flex items-center gap-4 p-3 rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 w-[380px] opacity-60 scale-95 origin-left shadow-2xl">
+<img src="./dish2.png" class="w-[120px] h-[140px] rounded-[16px] object-cover" alt="Burrata Salad">
+<div class="flex flex-col gap-2">
+<h3 class="text-white text-lg font-semibold leading-tight">Burrata Salad</h3>
+<p class="text-gray-300 text-[11px] leading-snug">Fresh burrata with heirloom tomatoes and basil.</p>
+<button class="bg-white text-black text-[11px] font-bold rounded-full py-2 px-5 w-fit mt-1 hover:bg-gray-200 transition-colors">View Details</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 pl-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 border border-white/20 text-white backdrop-blur-md hover:bg-black/60 transition-colors">
+<i class="ti ti-arrow-left"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition-colors shadow-lg">
+<i class="ti ti-arrow-right"></i>
+</button>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="food-heading" class="border-y border-[var(--mora-espresso)]/10 bg-[var(--mora-clay)] px-5 py-24 text-[var(--mora-candle)] sm:px-8 lg:px-10 lg:py-36" data-kid="2-2-3" data-name="food menu section" id="food">
+<div class="mx-auto grid max-w-[1360px] gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-16" data-kid="2-2-3-1" data-name="food menu container">
+<figure aria-live="polite" class="order-first relative h-[min(126vw,620px)] overflow-hidden border border-[var(--mora-espresso)] bg-[var(--mora-espresso)] lg:order-last lg:mt-20 lg:h-[710px]" data-kid="2-2-3-1-1" data-name="food display stage" id="food-stage">
+<img alt="Handmade pasta twirled on a white ceramic plate with tomato and parmesan, Erwan Hesry on Unsplash" class="h-full w-full object-cover" data-dynamic="true" data-kid="2-2-3-1-1-1" data-name="dish featured image" data-reason="src, alt, name, and meta text updated by interaction" decoding="async" id="food-image" loading="lazy" src="./food.png"/>
+<figcaption class="mora-fold mora-fold-clay absolute bottom-0 left-0 max-w-[88%] bg-[var(--mora-candle)] px-5 py-4 text-[var(--mora-espresso)]" data-kid="2-2-3-1-1-2" data-name="dish information overlay">
+<p class="mora-serif text-2xl leading-none" data-dynamic="true" data-kid="2-2-3-1-1-2-1" data-name="dish name text" data-reason="updated by interaction" id="food-dish-name">
+                            Truffle tagliatelle
+                        </p>
+<p class="mt-2 text-[10px] uppercase tracking-[.14em] text-[var(--mora-espresso)]/65" data-dynamic="true" data-kid="2-2-3-1-1-2-2" data-name="dish meta text" data-reason="updated by interaction" id="food-dish-meta">
+                            Warm parmesan · handmade pasta
+                        </p>
+</figcaption>
+</figure>
+<div class="order-last flex flex-col lg:order-first" data-kid="2-2-3-1-2" data-name="food description container">
+<div class="flex items-center justify-between" data-kid="2-2-3-1-2-1" data-name="food section header">
+
+<a class="mora-menu-link border-b border-[var(--mora-candle)]/60 pb-1 text-[10px] font-bold uppercase tracking-[.16em] text-[var(--mora-candle)] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-2-3-1-2-1-2" data-name="view full menu link" href="#food">
+                            Full menu
+                            <i aria-hidden="true" class="ti ti-arrow-up-right ml-2" data-kid="2-2-3-1-2-1-2-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+<h2 class="mora-serif mt-14 max-w-[620px] text-[clamp(3.4rem,7.3vw,7rem)] leading-[.87] tracking-[-.045em]" data-kid="2-2-3-1-2-2" data-name="food heading" id="food-heading">
+                        The argument for one more course.
+                    </h2>
+<div aria-label="Food categories" class="mt-14" data-kid="2-2-3-1-2-3" data-name="food categories tablist" role="tablist">
+<button aria-selected="false" class="mora-food-row mora-reveal grid min-h-[66px] w-full grid-cols-[38px_1fr] items-center gap-3 text-left is-visible" data-food-index="0" data-kid="2-2-3-1-2-3-1" data-name="antipasti category row" data-reveal="" role="tab" type="button">
+<span class="mora-food-number text-[11px] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-1-1" data-name="number index text">
+                                01
+                            </span>
+<span data-kid="2-2-3-1-2-3-1-2" data-name="category name container">
+<span class="mora-serif block text-3xl leading-none" data-kid="2-2-3-1-2-3-1-2-1" data-name="category name title">
+                                    Antipasti
+                                </span>
+<span class="mt-2 block text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-1-2-2" data-name="category description text">
+                                    burrata · roasted tomatoes · olive oil
+                                </span>
+</span>
+<span class="mora-food-rule col-span-2 h-px w-0" data-kid="2-2-3-1-2-3-1-3" data-name="category accent rule">
+</span>
+</button>
+<button aria-selected="true" class="mora-food-row is-active grid min-h-[66px] w-full grid-cols-[38px_1fr] items-center gap-3 text-left is-visible" data-food-index="1" data-kid="2-2-3-1-2-3-2" data-name="pasta category row" data-reveal="" role="tab" style="--mora-delay:70ms" type="button">
+<span class="mora-food-number text-[11px] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-2-1" data-name="number index text">
+                                02
+                            </span>
+<span data-kid="2-2-3-1-2-3-2-2" data-name="category name container">
+<span class="mora-serif block text-3xl leading-none" data-kid="2-2-3-1-2-3-2-2-1" data-name="category name title">
+                                    Pasta
+                                </span>
+<span class="mt-2 block text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-2-2-2" data-name="category description text">
+                                    truffle tagliatelle · warm parmesan
+                                </span>
+</span>
+<span class="mora-food-rule col-span-2 h-px w-8" data-kid="2-2-3-1-2-3-2-3" data-name="category accent rule">
+</span>
+</button>
+<button aria-selected="false" class="mora-food-row grid min-h-[66px] w-full grid-cols-[38px_1fr] items-center gap-3 text-left" data-food-index="2" data-kid="2-2-3-1-2-3-3" data-name="pizza category row" role="tab" type="button">
+<span class="mora-food-number text-[11px] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-3-1" data-name="number index text">
+                                03
+                            </span>
+<span data-kid="2-2-3-1-2-3-3-2" data-name="category name container">
+<span class="mora-serif block text-3xl leading-none" data-kid="2-2-3-1-2-3-3-2-1" data-name="category name title">
+                                    Pizza &amp; classics
+                                </span>
+<span class="mt-2 block text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-3-2-2" data-name="category description text">
+                                    blistered margherita · basil · shared hands
+                                </span>
+</span>
+<span class="mora-food-rule col-span-2 h-px w-0" data-kid="2-2-3-1-2-3-3-3" data-name="category accent rule">
+</span>
+</button>
+<button aria-selected="false" class="mora-food-row grid min-h-[66px] w-full grid-cols-[38px_1fr] items-center gap-3 text-left" data-food-index="3" data-kid="2-2-3-1-2-3-4" data-name="mains category row" role="tab" type="button">
+<span class="mora-food-number text-[11px] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-4-1" data-name="number index text">
+                                04
+                            </span>
+<span data-kid="2-2-3-1-2-3-4-2" data-name="category name container">
+<span class="mora-serif block text-3xl leading-none" data-kid="2-2-3-1-2-3-4-2-1" data-name="category name title">
+                                    Main dishes
+                                </span>
+<span class="mt-2 block text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-4-2-2" data-name="category description text">
+                                    grilled beef · seasonal vegetables · red wine
+                                </span>
+</span>
+<span class="mora-food-rule col-span-2 h-px w-0" data-kid="2-2-3-1-2-3-4-3" data-name="category accent rule">
+</span>
+</button>
+<button aria-selected="false" class="mora-food-row grid min-h-[66px] w-full grid-cols-[38px_1fr] items-center gap-3 text-left" data-food-index="4" data-kid="2-2-3-1-2-3-5" data-name="desserts category row" role="tab" type="button">
+<span class="mora-food-number text-[11px] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-5-1" data-name="number index text">
+                                05
+                            </span>
+<span data-kid="2-2-3-1-2-3-5-2" data-name="category name container">
+<span class="mora-serif block text-3xl leading-none" data-kid="2-2-3-1-2-3-5-2-1" data-name="category name title">
+                                    Desserts
+                                </span>
+<span class="mt-2 block text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]/55" data-kid="2-2-3-1-2-3-5-2-2" data-name="category description text">
+                                    tiramisù · espresso · something to share
+                                </span>
+</span>
+<span class="mora-food-rule col-span-2 h-px w-0" data-kid="2-2-3-1-2-3-5-3" data-name="category accent rule">
+</span>
+</button>
+</div>
+<a class="mora-outline-button mt-10 inline-flex w-fit items-center border border-[var(--mora-candle)] px-6 py-4 text-[10px] font-bold uppercase tracking-[.18em] text-[var(--mora-candle)] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-2-3-1-2-4" data-name="view menu full button" href="#contact">
+                        View menu
+                        <i aria-hidden="true" class="ti ti-arrow-up-right ml-8 text-sm" data-kid="2-2-3-1-2-4-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+</div>
+</section>
+<section aria-labelledby="bar-heading" class="relative overflow-hidden bg-[var(--mora-olive)] px-5 py-28 text-[var(--mora-candle)] sm:px-8 lg:px-10 lg:py-36" data-kid="2-2-4" data-name="bar section" id="bar">
+<svg aria-hidden="true" class="pointer-events-none absolute right-[7%] top-12 hidden h-[520px] w-[420px] lg:block" data-kid="2-2-4-1" data-name="abstract bar SVG graphic" viewbox="0 0 420 520">
+<path class="mora-bar-line" d="M70 35 C150 110 260 65 316 136 C361 193 260 230 211 263 C140 311 154 381 273 420 C324 437 351 467 338 505">
+</path>
+<path class="mora-bar-line" d="M68 36 C88 55 100 68 104 94">
+</path>
+<circle class="mora-bar-line" cx="70" cy="35" r="5">
+</circle>
+</svg>
+<div class="relative mx-auto grid max-w-[1360px] gap-16 lg:grid-cols-[.9fr_1.1fr] lg:gap-20" data-kid="2-2-4-2" data-name="bar container">
+<div class="mora-reveal lg:pt-5 is-visible" data-kid="2-2-4-2-1" data-name="bar image container" data-reveal="">
+<figure class="relative h-[520px] w-[88%] overflow-hidden border border-[var(--mora-espresso)] lg:h-[650px] lg:w-[86%]" data-kid="2-2-4-2-1-1" data-name="bar image frame">
+<img alt="Refined Italian aperitivo cocktails on a dark bar with candlelight, Amanda Sala on Unsplash" class="h-full w-full object-cover" data-kid="2-2-4-2-1-1-1" data-name="bar image" decoding="async" loading="lazy" src="./bar.png"/>
+<span class="absolute right-0 top-1/2 h-px w-14 bg-[var(--mora-brass)]" data-kid="2-2-4-2-1-1-2" data-name="bar image side accent">
+</span>
+</figure>
+<p class="mt-4 text-[10px] uppercase tracking-[.17em] text-[var(--mora-candle)]/55" data-kid="2-2-4-2-1-2" data-name="bar image caption">
+                        Drinks from noon · aperitivo starts whenever you do
+                    </p>
+</div>
+<div class="mora-reveal lg:relative lg:z-10 lg:pt-5 is-visible" data-kid="2-2-4-2-2" data-name="bar content column" data-reveal="" style="--mora-delay:120ms">
+
+<h2 class="mora-serif mt-14 max-w-[700px] text-[clamp(3.5rem,7vw,7rem)] leading-[.87] tracking-[-.045em]" data-kid="2-2-4-2-2-2" data-name="bar heading" id="bar-heading">
+                        An aperitivo,
+                        <br data-kid="2-2-4-2-2-2-1" data-name="line break"/>
+<em data-kid="2-2-4-2-2-2-2" data-name="italic emphasis">
+                            then another hour.
+                        </em>
+</h2>
+<p class="mt-10 max-w-[430px] text-sm leading-7 text-[var(--mora-candle)]/80" data-kid="2-2-4-2-2-3" data-name="bar description text">
+                        Bright bitters, Italian wines, classic cocktails and a table worth staying at. C HOUSE moves easily from first drink to final course.
+                    </p>
+<div class="mt-12 max-w-[590px] border-y border-[var(--mora-candle)]/25" data-kid="2-2-4-2-2-4" data-name="bar menu items list">
+<div class="flex items-center justify-between gap-6 py-4 text-sm" data-kid="2-2-4-2-2-4-1" data-name="bar menu item 1">
+<span data-kid="2-2-4-2-2-4-1-1" data-name="item name">
+                                Aperitivo
+                            </span>
+<span class="text-right text-[var(--mora-candle)]/58" data-kid="2-2-4-2-2-4-1-2" data-name="item description">
+                                bitter · citrus · spritz
+                            </span>
+</div>
+<div class="flex items-center justify-between gap-6 border-t border-[var(--mora-candle)]/25 py-4 text-sm" data-kid="2-2-4-2-2-4-2" data-name="bar menu item 2">
+<span data-kid="2-2-4-2-2-4-2-1" data-name="item name">
+                                Cocktails
+                            </span>
+<span class="text-right text-[var(--mora-candle)]/58" data-kid="2-2-4-2-2-4-2-2" data-name="item description">
+                                classics with a C HOUSE pour
+                            </span>
+</div>
+<div class="flex items-center justify-between gap-6 border-t border-[var(--mora-candle)]/25 py-4 text-sm" data-kid="2-2-4-2-2-4-3" data-name="bar menu item 3">
+<span data-kid="2-2-4-2-2-4-3-1" data-name="item name">
+                                Wine
+                            </span>
+<span class="text-right text-[var(--mora-candle)]/58" data-kid="2-2-4-2-2-4-3-2" data-name="item description">
+                                Italian bottles &amp; easy glasses
+                            </span>
+</div>
+</div>
+<a class="mora-light-button mt-10 inline-flex items-center border border-[var(--mora-candle)] px-6 py-4 text-[10px] font-bold uppercase tracking-[.17em] text-[var(--mora-candle)] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-2-4-2-2-5" data-name="bar discovery button" href="#contact">
+                        Discover the bar
+                        <i aria-hidden="true" class="ti ti-arrow-up-right ml-7 text-sm" data-kid="2-2-4-2-2-5-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+</div>
+</section>
+<section aria-labelledby="gallery-heading" class="mora-gallery bg-[var(--mora-parchment)] px-5 py-28 sm:px-8 lg:px-10 lg:py-40" data-kid="2-2-5" data-name="gallery section" id="gallery">
+<div class="mx-auto max-w-[1360px]" data-kid="2-2-5-1" data-name="gallery content container">
+<div class="flex flex-col gap-7 border-b border-[var(--mora-espresso)]/28 pb-8 lg:flex-row lg:items-end lg:justify-between" data-kid="2-2-5-1-1" data-name="gallery header">
+<div data-kid="2-2-5-1-1-1" data-name="gallery title container">
+
+<h2 class="mora-serif mora-reveal mt-10 text-[clamp(3.2rem,6.7vw,6.8rem)] leading-[.9] tracking-[-.045em] is-visible" data-kid="2-2-5-1-1-1-2" data-name="gallery heading" data-reveal="" id="gallery-heading" style="--mora-delay:90ms">
+                            A table in motion.
+                        </h2>
+</div>
+<p class="mora-reveal max-w-[270px] text-sm leading-6 text-[var(--mora-espresso)]/70 lg:pb-2 is-visible" data-kid="2-2-5-1-1-2" data-name="gallery description" data-reveal="" style="--mora-delay:170ms">
+                        Plates, pours, people, and the in-between.
+                    </p>
+</div>
+<div class="mora-gallery-scroller mt-14 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-5 lg:grid lg:grid-cols-12 lg:gap-x-3 lg:gap-y-3 lg:overflow-visible lg:pb-0" data-kid="2-2-5-1-2" data-name="gallery items scroller">
+<button aria-label="Open gallery image: 19:42 second round" class="mora-gallery-item mora-reveal mora-fold-clay min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-4 lg:col-start-1 lg:mt-0 lg:min-w-0 is-visible" data-gallery-index="0" data-kid="2-2-5-1-2-1" data-name="gallery item 1" data-reveal="" type="button">
+<img alt="Interior dining booths with a decorative golden ring divider" class="h-[350px] w-full object-cover lg:h-[380px]" data-kid="2-2-5-1-2-1-1" data-name="gallery image 1" decoding="async" loading="lazy" src="./gallery/1.png"/>
+
+</button>
+<button aria-label="Open gallery image: 21:07 glasses raised" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-2 lg:col-start-5 lg:mt-20 lg:min-w-0 is-visible" data-gallery-index="1" data-kid="2-2-5-1-2-2" data-name="gallery item 2" data-reveal="" style="--mora-delay:70ms" type="button">
+<img alt="Interior dining space with elegantly set tables" class="h-[300px] w-full object-cover lg:h-[270px]" data-kid="2-2-5-1-2-2-1" data-name="gallery image 2" decoding="async" loading="lazy" src="./gallery/2.png"/>
+
+</button>
+<button aria-label="Open gallery image: 12:18 lunch table" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-3 lg:col-start-7 lg:mt-3 lg:min-w-0 is-visible" data-gallery-index="2" data-kid="2-2-5-1-2-3" data-name="gallery item 3" data-reveal="" style="--mora-delay:130ms" type="button">
+<img alt="Outdoor patio setting with woven chairs and a marble table" class="h-[350px] w-full object-cover lg:h-[430px]" data-kid="2-2-5-1-2-3-1" data-name="gallery image 3" decoding="async" loading="lazy" src="./gallery/3.png"/>
+
+</button>
+<button aria-label="Open gallery image: 18:36 first pour" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-3 lg:col-start-10 lg:mt-12 lg:min-w-0 is-visible" data-gallery-index="3" data-kid="2-2-5-1-2-4" data-name="gallery item 4" data-reveal="" style="--mora-delay:190ms" type="button">
+<img alt="Interior dining booths beside warm golden lighting" class="h-[300px] w-full object-cover lg:h-[300px]" data-kid="2-2-5-1-2-4-1" data-name="gallery image 4" decoding="async" loading="lazy" src="./gallery/4.png"/>
+
+</button>
+<button aria-label="Open gallery image: 20:14 at the corner table" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-3 lg:col-start-2 lg:mt-8 lg:min-w-0 is-visible" data-gallery-index="4" data-kid="2-2-5-1-2-5" data-name="gallery item 5" data-reveal="" style="--mora-delay:90ms" type="button">
+<img alt="Elegant crystal chandelier hanging in the dining area" class="h-[290px] w-full object-cover lg:h-[280px]" data-kid="2-2-5-1-2-5-1" data-name="gallery image 5" decoding="async" loading="lazy" src="./gallery/6.png"/>
+
+</button>
+<button aria-label="Open gallery image: 21:07 pasta passed around" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-4 lg:col-start-5 lg:mt-20 lg:min-w-0 is-visible" data-gallery-index="5" data-kid="2-2-5-1-2-6" data-name="gallery item 6" data-reveal="" style="--mora-delay:150ms" type="button">
+<img alt="Outdoor restaurant seating area with a large canopy at sunset" class="h-[330px] w-full object-cover lg:h-[330px]" data-kid="2-2-5-1-2-6-1" data-name="gallery image 6" decoding="async" loading="lazy" src="./gallery/5.png"/>
+
+</button>
+<button aria-label="Open gallery image: 19:04 the little details" class="mora-gallery-item mora-reveal min-w-[76vw] snap-start border-[var(--mora-espresso)] lg:col-span-3 lg:col-start-10 lg:mt-3 lg:min-w-0 is-visible" data-gallery-index="6" data-kid="2-2-5-1-2-7" data-name="gallery item 7" data-reveal="" style="--mora-delay:220ms" type="button">
+<img alt="Interior dining lounge with white booths and wood paneled walls" class="h-[280px] w-full object-cover lg:h-[300px]" data-kid="2-2-5-1-2-7-1" data-name="gallery image 7" decoding="async" loading="lazy" src="./gallery/new6.png"/>
+
+</button>
+</div>
+<div class="mt-4 flex items-center justify-between border-t border-[var(--mora-espresso)]/25 pt-5 text-[10px] uppercase tracking-[.16em] text-[var(--mora-espresso)]/62" data-kid="2-2-5-1-3" data-name="gallery footer controls">
+<span data-kid="2-2-5-1-3-1" data-name="gallery tap instructions">
+                        Tap a frame to enlarge
+                    </span>
+<span class="lg:hidden" data-kid="2-2-5-1-3-2" data-name="gallery counter">
+                        1 / 7
+                    </span>
+<a class="mora-text-action hidden text-[var(--mora-espresso)] lg:inline-flex" data-kid="2-2-5-1-3-3" data-name="gallery link" href="#social">
+                        See the gallery
+                        <i aria-hidden="true" class="ti ti-arrow-up-right text-sm" data-kid="2-2-5-1-3-3-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+</div>
+</section>
+<section aria-labelledby="occasions-heading" class="hidden bg-[var(--mora-stone)] px-5 py-28 sm:px-8 lg:px-10 lg:py-36" data-kid="2-2-6" data-name="occasions section" id="occasions">
+<div class="mx-auto max-w-[1360px]" data-kid="2-2-6-1" data-name="occasions content container">
+<div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between" data-kid="2-2-6-1-1" data-name="occasions header">
+<div data-kid="2-2-6-1-1-1" data-name="occasions kicker container">
+<p class="mora-kicker mora-reveal text-[var(--mora-clay)] is-visible" data-kid="2-2-6-1-1-1-1" data-name="occasions kicker text" data-reveal="">
+                            05 / Occasions
+                        </p>
+<h2 class="mora-serif mora-reveal mt-10 max-w-[700px] text-[clamp(3.4rem,7vw,7rem)] leading-[.88] tracking-[-.045em] is-visible" data-kid="2-2-6-1-1-1-2" data-name="occasions heading" data-reveal="" id="occasions-heading" style="--mora-delay:100ms">
+                            Take your time with it.
+                        </h2>
+</div>
+<p class="mora-reveal max-w-[270px] text-sm leading-6 text-[var(--mora-espresso)]/68 lg:pb-2 is-visible" data-kid="2-2-6-1-1-2" data-name="occasions description" data-reveal="" style="--mora-delay:190ms">
+                        One room, six good reasons to arrive.
+                    </p>
+</div>
+<div class="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-[.82fr_1.18fr] lg:gap-16" data-kid="2-2-6-1-2" data-name="occasions layout grid">
+<div class="order-last lg:order-first" data-kid="2-2-6-1-2-1" data-name="occasions selection column">
+<div aria-label="Ways to spend time at C HOUSE" class="flex snap-x gap-0 overflow-x-auto pb-1 lg:block" data-kid="2-2-6-1-2-1-1" data-name="occasions list" role="tablist" style="scrollbar-width:none">
+<button aria-selected="true" class="mora-occasion-row is-active mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-1" data-name="occasion row 1" data-occasion-index="0" data-reveal="" role="tab" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-1-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em]" data-kid="2-2-6-1-2-1-1-1-1-1" data-name="occasion time">
+                                        12:00
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-1-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-1-1-2-1" data-name="occasion title">
+                                            Lunch
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-1-1-2-2" data-name="occasion description" id="occasion-copy-mobile-0">
+                                            A quick plate if you need it; a second espresso if you don’t.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-1-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+<button aria-selected="false" class="mora-occasion-row mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-2" data-name="occasion row 2" data-occasion-index="1" data-reveal="" role="tab" style="--mora-delay:50ms" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-2-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em] text-[var(--mora-espresso)]/55" data-kid="2-2-6-1-2-1-1-2-1-1" data-name="occasion time">
+                                        18:00
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-2-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-2-1-2-1" data-name="occasion title">
+                                            Aperitivo
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-2-1-2-2" data-name="occasion description">
+                                            Aperol, bitter orange, small plates and an unhurried start.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-2-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+<button aria-selected="false" class="mora-occasion-row mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-3" data-name="occasion row 3" data-occasion-index="2" data-reveal="" role="tab" style="--mora-delay:100ms" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-3-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em] text-[var(--mora-espresso)]/55" data-kid="2-2-6-1-2-1-1-3-1-1" data-name="occasion time">
+                                        20:00
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-3-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-3-1-2-1" data-name="occasion title">
+                                            Dinner
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-3-1-2-2" data-name="occasion description">
+                                            Pasta, proper mains and bottles made for passing around.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-3-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+<button aria-selected="false" class="mora-occasion-row mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-4" data-name="occasion row 4" data-occasion-index="3" data-reveal="" role="tab" style="--mora-delay:150ms" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-4-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em] text-[var(--mora-espresso)]/55" data-kid="2-2-6-1-2-1-1-4-1-1" data-name="occasion time">
+                                        21:30
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-4-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-4-1-2-1" data-name="occasion title">
+                                            Date night
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-4-1-2-2" data-name="occasion description">
+                                            Low light, a corner table and dessert worth sharing.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-4-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+<button aria-selected="false" class="mora-occasion-row mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-5" data-name="occasion row 5" data-occasion-index="4" data-reveal="" role="tab" style="--mora-delay:200ms" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-5-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em] text-[var(--mora-espresso)]/55" data-kid="2-2-6-1-2-1-1-5-1-1" data-name="occasion time">
+                                        22:15
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-5-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-5-1-2-1" data-name="occasion title">
+                                            Friends at the table
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-5-1-2-2" data-name="occasion description">
+                                            Big tables, louder stories, one more round.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-5-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+<button aria-selected="false" class="mora-occasion-row mora-reveal min-w-[82vw] snap-start px-0 py-5 lg:min-w-0 is-visible" data-kid="2-2-6-1-2-1-1-6" data-name="occasion row 6" data-occasion-index="5" data-reveal="" role="tab" style="--mora-delay:250ms" type="button">
+<span class="grid grid-cols-[88px_1fr_22px] items-center gap-4" data-kid="2-2-6-1-2-1-1-6-1" data-name="occasion details">
+<span class="mora-occasion-time text-[10px] font-bold uppercase tracking-[.12em] text-[var(--mora-espresso)]/55" data-kid="2-2-6-1-2-1-1-6-1-1" data-name="occasion time">
+                                        Any time
+                                    </span>
+<span data-kid="2-2-6-1-2-1-1-6-1-2" data-name="occasion name/desc">
+<span class="block text-lg font-semibold" data-kid="2-2-6-1-2-1-1-6-1-2-1" data-name="occasion title">
+                                            Private celebrations
+                                        </span>
+<span class="mt-1 block max-w-[330px] text-xs leading-5 text-[var(--mora-espresso)]/68" data-kid="2-2-6-1-2-1-1-6-1-2-2" data-name="occasion description">
+                                            Dinner parties, birthdays and gatherings with room to linger.
+                                        </span>
+</span>
+<span class="mora-occasion-marker h-px w-5 bg-[var(--mora-clay)]" data-kid="2-2-6-1-2-1-1-6-1-3" data-name="occasion highlight marker">
+</span>
+</span>
+</button>
+</div>
+<a class="mora-text-action mt-10 text-[10px] font-bold uppercase tracking-[.16em] text-[var(--mora-espresso)] focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4" data-kid="2-2-6-1-2-1-2" data-name="private celebration plan link" href="#contact">
+                            Plan a private celebration
+                            <i aria-hidden="true" class="ti ti-arrow-up-right text-sm" data-kid="2-2-6-1-2-1-2-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+<div class="order-first lg:order-last" data-kid="2-2-6-1-2-2" data-name="occasions image/display">
+<figure class="mora-photo-frame relative h-[430px] overflow-hidden lg:h-[600px]" data-kid="2-2-6-1-2-2-1" data-name="occasion image frame">
+<img alt="Warm contemporary restaurant interior with olive seating and evening lamps, SAAD EMRIS on Pexels" class="h-full w-full object-cover" data-dynamic="true" data-kid="2-2-6-1-2-2-1-1" data-name="occasion feature image" data-reason="src, alt, and content updated by interaction" decoding="async" id="occasion-image" loading="lazy" src="https://images.pexels.com/photos/17086329/pexels-photo-17086329.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1100&amp;q=80"/>
+<figcaption class="mora-fold-clay mora-fold absolute bottom-0 left-0 max-w-[88%] bg-[var(--mora-candle)] px-4 py-3 text-[10px] uppercase tracking-[.14em] text-[var(--mora-espresso)]" data-dynamic="true" data-kid="2-2-6-1-2-2-1-2" data-name="occasion image caption" data-reason="text updated by interaction" id="occasion-caption">
+                                Lunch at C HOUSE · easy plates, second espresso
+                            </figcaption>
+</figure>
+<p class="mora-serif mt-7 max-w-[620px] text-3xl leading-[1.05] text-[var(--mora-espresso)]" data-dynamic="true" data-kid="2-2-6-1-2-2-2" data-name="occasion copy text" data-reason="text updated by interaction" id="occasion-copy">
+                            A quick plate if you need it; a second espresso if you don’t.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="social-heading" class="bg-[var(--mora-stone)] px-5 py-28 sm:px-8 lg:px-10 lg:py-36" data-kid="2-2-7" data-name="social section" id="social">
+<div class="mx-auto flex max-w-[1360px] flex-col gap-12 lg:gap-16" data-kid="2-2-7-1" data-name="social content container">
+<div class="pt-5" data-kid="2-2-7-1-1" data-name="social top header">
+
+<h2 class="mora-serif mora-reveal mt-12 text-[clamp(3rem,5.6vw,5.4rem)] leading-[.91] tracking-[-.04em] is-visible" data-kid="2-2-7-1-1-2" data-name="social heading" data-reveal="" id="social-heading" style="--mora-delay:100ms">
+                        From the pass to the last glass.
+                    </h2>
+<p class="mora-reveal mt-8 max-w-[260px] text-sm leading-6 text-[var(--mora-espresso)]/70 is-visible" data-kid="2-2-7-1-1-3" data-name="social description text" data-reveal="" style="--mora-delay:180ms">
+                        A few recent frames from C HOUSE.
+                    </p>
+<a class="mora-text-action mora-reveal mt-10 text-[10px] font-bold uppercase tracking-[.16em] text-[var(--mora-espresso)] focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4 is-visible" data-kid="2-2-7-1-1-4" data-name="instagram link" data-reveal="" href="https://www.instagram.com/chouseuae/" rel="noreferrer" style="--mora-delay:240ms" target="_blank">
+                        Follow C HOUSE on Instagram
+                        <i aria-hidden="true" class="ti ti-instagram text-base" data-kid="2-2-7-1-1-4-1" data-name="instagram icon">
+</i>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-sm" data-kid="2-2-7-1-1-4-2" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:gap-6" data-kid="2-2-7-1-2" data-name="social posts grid">
+<a aria-label="Instagram post: pasta passed around" class="mora-social-item mora-reveal relative block aspect-[4/5] w-full overflow-hidden is-visible" data-kid="2-2-7-1-2-1" data-name="instagram post 1" data-reveal="" href="https://www.instagram.com/chouseuae/" rel="noreferrer" target="_blank">
+<img alt="Handmade pasta with tomato and parmesan on a white plate, Erwan Hesry on Unsplash" class="h-full w-full object-cover" data-kid="2-2-7-1-2-1-1" data-name="post image 1" decoding="async" loading="lazy" src="https://images.unsplash.com/photo-1566802374089-a80446239c9d?auto=format&amp;w=1000&amp;q=80&amp;fit=crop"/>
+<span class="mora-social-caption absolute inset-x-0 bottom-0 bg-[var(--mora-espresso)]/88 px-3 py-3 text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]" data-kid="2-2-7-1-2-1-2" data-name="post caption 1">
+                            Pasta, passed around.
+                        </span>
+</a>
+<a aria-label="Instagram post: first drink last light" class="mora-social-item mora-reveal relative block aspect-[4/5] w-full overflow-hidden is-visible" data-kid="2-2-7-1-2-2" data-name="instagram post 2" data-reveal="" href="https://www.instagram.com/chouseuae/" rel="noreferrer" style="--mora-delay:70ms" target="_blank">
+<img alt="Bright aperitivo cocktail in warm evening light, Nati on Pexels" class="h-full w-full object-cover" data-kid="2-2-7-1-2-2-1" data-name="post image 2" decoding="async" loading="lazy" src="https://images.pexels.com/photos/39215054/pexels-photo-39215054.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900&amp;q=80"/>
+<span class="mora-social-caption absolute inset-x-0 bottom-0 bg-[var(--mora-espresso)]/88 px-3 py-3 text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]" data-kid="2-2-7-1-2-2-2" data-name="post caption 2">
+                            First drink, last light.
+                        </span>
+</a>
+<a aria-label="Instagram post: a room ready for dinner" class="mora-social-item mora-reveal relative block aspect-[4/5] w-full overflow-hidden is-visible" data-kid="2-2-7-1-2-3" data-name="instagram post 3" data-reveal="" href="https://www.instagram.com/chouseuae/" rel="noreferrer" style="--mora-delay:120ms" target="_blank">
+<img alt="Warmly lit restaurant room with neatly laid tables, Quang Nguyen Vinh on Pexels" class="h-full w-full object-cover" data-kid="2-2-7-1-2-3-1" data-name="post image 3" decoding="async" loading="lazy" src="./dish2.png"/>
+<span class="mora-social-caption absolute inset-x-0 bottom-0 bg-[var(--mora-espresso)]/88 px-3 py-3 text-[10px] uppercase tracking-[.12em] text-[var(--mora-candle)]" data-kid="2-2-7-1-2-3-2" data-name="post caption 3">
+                            A room ready for dinner.
+                        </span>
+</a>
+
+</div>
+</div>
+<div class="mx-auto mt-10 max-w-[1360px] border-t border-[var(--mora-espresso)]/25 pt-5 text-[10px] uppercase tracking-[.15em] text-[var(--mora-espresso)]/65 sm:hidden" data-kid="2-2-7-2" data-name="mobile social link">
+                See all on Instagram
+                <i aria-hidden="true" class="ti ti-arrow-up-right ml-2" data-kid="2-2-7-2-1" data-name="arrow-up-right icon">
+</i>
+</div>
+</section>
+<section aria-labelledby="contact-heading" class="bg-[var(--mora-parchment)] px-5 py-28 sm:px-8 lg:px-10 lg:py-40" data-kid="2-2-8" data-name="contact section" id="contact">
+<div class="mx-auto grid max-w-[1360px] gap-14 lg:grid-cols-[.75fr_1.25fr] lg:gap-16" data-kid="2-2-8-1" data-name="contact grid container">
+<div class="mora-reveal is-visible" data-kid="2-2-8-1-1" data-name="contact info block" data-reveal="">
+
+<h2 class="mora-serif mt-12 text-[clamp(3.4rem,6.6vw,6.6rem)] leading-[.88] tracking-[-.045em]" data-kid="2-2-8-1-1-2" data-name="contact heading" id="contact-heading">
+                        Find the long table.
+                    </h2>
+<div class="mt-14 border-y border-[var(--mora-espresso)]/28 py-7 text-sm leading-7" data-kid="2-2-8-1-1-3" data-name="contact details list">
+<p class="flex items-start gap-3" data-kid="2-2-8-1-1-3-1" data-name="contact location">
+<i aria-hidden="true" class="ti ti-map-pin mt-1 text-base text-[var(--mora-clay)]" data-kid="2-2-8-1-1-3-1-1" data-name="location pin icon">
+</i>
+<span data-kid="2-2-8-1-1-3-1-2" data-name="location address block">
+<strong class="font-semibold" data-kid="2-2-8-1-1-3-1-2-1" data-name="location company name">
+                                    C HOUSE
+                                </strong>
+<br data-kid="2-2-8-1-1-3-1-2-2" data-name="line break"/>
+                                Jebel Ali Recreation Club
+                                <br data-kid="2-2-8-1-1-3-1-2-3" data-name="location address lines"/>
+                                Dubai, United Arab Emirates
+                            </span>
+</p>
+<p class="mt-6 flex items-start gap-3" data-kid="2-2-8-1-1-3-2" data-name="contact hours">
+<i aria-hidden="true" class="ti ti-clock mt-1 text-base text-[var(--mora-clay)]" data-kid="2-2-8-1-1-3-2-1" data-name="clock icon">
+</i>
+<span data-kid="2-2-8-1-1-3-2-2" data-name="hours block">
+<strong class="font-semibold" data-kid="2-2-8-1-1-3-2-2-1" data-name="hours title">
+                                    Open daily
+                                </strong>
+<br data-kid="2-2-8-1-1-3-2-2-2" data-name="line break"/>
+                                12:00–01:00
+                            </span>
+</p>
+<p class="mt-6 flex items-start gap-3" data-kid="2-2-8-1-1-3-3" data-name="contact methods">
+<i aria-hidden="true" class="ti ti-phone mt-1 text-base text-[var(--mora-clay)]" data-kid="2-2-8-1-1-3-3-1" data-name="phone icon">
+</i>
+<span data-kid="2-2-8-1-1-3-3-2" data-name="methods block">
+<a class="border-b border-[var(--mora-espresso)]/50 pb-1 focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4" data-kid="2-2-8-1-1-3-3-2-1" data-name="phone link" href="tel:+971522185569">
+                                    +971 52 218 5569
+                                </a>
+<br data-kid="2-2-8-1-1-3-3-2-2" data-name="line break"/>
+<a class="border-b border-[var(--mora-espresso)]/50 pb-1 focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4" data-kid="2-2-8-1-1-3-3-2-3" data-name="email link" href="mailto:hello@moradubai.ae">
+                                    hello@moradubai.ae
+                                </a>
+</span>
+</p>
+</div>
+<div class="mt-8 flex flex-wrap gap-x-7 gap-y-5" data-kid="2-2-8-1-1-4" data-name="contact buttons container">
+<a class="mora-text-action text-[10px] font-bold uppercase tracking-[.16em] focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4" data-kid="2-2-8-1-1-4-1" data-name="directions link" href="https://www.google.com/maps/search/?api=1&amp;query=Jebel+Ali+Recreation+Club+Dubai" rel="noreferrer" target="_blank">
+                            Get directions
+                            <i aria-hidden="true" class="ti ti-arrow-up-right text-sm" data-kid="2-2-8-1-1-4-1-1" data-name="arrow-up-right icon">
+</i>
+</a>
+<button class="mora-text-action text-[10px] font-bold uppercase tracking-[.16em] focus-visible:outline-2 focus-visible:outline-[var(--mora-espresso)] focus-visible:outline-offset-4" data-kid="2-2-8-1-1-4-2" data-name="reserve button" data-open-reservation="" type="button">
+                            Reserve a table
+                            <i aria-hidden="true" class="ti ti-arrow-up-right text-sm" data-kid="2-2-8-1-1-4-2-1" data-name="arrow-up-right icon">
+</i>
+</button>
+</div>
+</div>
+<div class="mora-reveal mora-map-panel mora-fold relative min-h-[440px] overflow-hidden border border-[var(--mora-olive)] lg:min-h-[590px] is-visible" data-kid="2-2-8-1-2" data-name="map display panel" data-reveal="" style="--mora-delay:140ms">
+<iframe src="https://maps.google.com/maps?q=Jebel%20Ali%20Recreation%20Club%20Dubai&t=&z=14&ie=UTF8&iwloc=&output=embed" class="absolute inset-0 h-full w-full grayscale opacity-80 mix-blend-multiply" frameborder="0" style="border:0" allowfullscreen></iframe>
+<div class="absolute left-6 top-6 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[.16em] text-[var(--mora-olive)]/65" data-kid="2-2-8-1-2-2" data-name="map location header">
+<i aria-hidden="true" class="ti ti-map-pin text-base text-[var(--mora-clay)]" data-kid="2-2-8-1-2-2-1" data-name="location pin icon">
+</i>
+                        Dubai · Jebel Ali
+                    </div>
+<div class="mora-fold mora-fold-parchment absolute bottom-6 left-6 bg-[var(--mora-clay)] px-5 py-4 text-[var(--mora-candle)]" data-kid="2-2-8-1-2-3" data-name="map caption overlay">
+<p class="text-xs font-semibold" data-kid="2-2-8-1-2-3-1" data-name="location title">
+                            Jebel Ali Recreation Club
+                        </p>
+<p class="mt-1 text-[10px] text-[var(--mora-candle)]/75" data-kid="2-2-8-1-2-3-2" data-name="location address">
+                            C HOUSE · Dubai, UAE
+                        </p>
+</div>
+<div class="absolute bottom-6 right-6 border border-[var(--mora-olive)]/40 bg-[var(--mora-stone)]/75 px-4 py-3 text-[9px] uppercase tracking-[.14em] text-[var(--mora-olive)]" data-kid="2-2-8-1-2-4" data-name="map link overlay">
+                        Open in Maps
+                        <i aria-hidden="true" class="ti ti-arrow-up-right ml-2 text-sm" data-kid="2-2-8-1-2-4-1" data-name="arrow-up-right icon">
+</i>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-black px-5 py-20 text-[var(--mora-candle)] sm:px-8 lg:px-10 lg:py-28" data-kid="2-3" data-name="main page footer">
+<div class="mx-auto max-w-[1360px]" data-kid="2-3-1" data-name="footer wrapper">
+<div class="flex flex-col gap-12 border-b border-[var(--mora-candle)]/25 pb-16 lg:flex-row lg:items-end lg:justify-between" data-kid="2-3-1-1" data-name="footer header grid">
+<div data-kid="2-3-1-1-1" data-name="footer brand container">
+<div class="flex items-center" data-kid="2-3-1-1-1-1" data-name="brand name title">
+<img src="./logo.png" class="h-[clamp(10rem,18vw,20rem)] w-auto object-contain -ml-8 sm:-ml-12 lg:-ml-16" alt="Logo">
+<div class="mora-serif text-[clamp(4.5rem,9vw,8.5rem)] leading-[.8] tracking-[-.07em]">
+                        C HOUSE
+                    </div>
+</div>
+<p class="mt-5 text-[10px] font-semibold uppercase tracking-[.24em] text-[var(--mora-candle)]/58" data-kid="2-3-1-1-1-2" data-name="brand subtitle">
+                        Italian bistro · bar · lounge
+                    </p>
+</div>
+<div class="max-w-[360px] lg:pb-1" data-kid="2-3-1-1-2" data-name="footer call to action container">
+<p class="mora-serif text-3xl leading-[1.05]" data-kid="2-3-1-1-2-1" data-name="cta headline text">
+                        Dinner is better when it takes its time.
+                    </p>
+<button class="mora-primary mora-fold mora-fold-candle mt-8 px-6 py-4 text-[10px] font-bold uppercase tracking-[.16em] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-3-1-1-2-2" data-name="cta reserve button" data-open-reservation="" type="button">
+                        Reserve a table
+                        <i aria-hidden="true" class="ti ti-arrow-up-right ml-6 text-sm" data-kid="2-3-1-1-2-2-1" data-name="arrow-up-right icon">
+</i>
+</button>
+</div>
+</div>
+<div class="grid gap-12 py-14 text-sm sm:grid-cols-2 lg:grid-cols-[1.3fr_.8fr_1fr]" data-kid="2-3-1-2" data-name="footer links grid">
+<div data-kid="2-3-1-2-1" data-name="footer visit column">
+<p class="mora-kicker text-[var(--mora-brass)]" data-kid="2-3-1-2-1-1" data-name="visit kicker text">
+                        Visit
+                    </p>
+<div class="mt-5 leading-7 text-[var(--mora-candle)]/68" data-kid="2-3-1-2-1-2" data-name="visit content list">
+<p data-kid="2-3-1-2-1-2-1" data-name="address line 1">
+                            Jebel Ali Recreation Club
+                        </p>
+<p data-kid="2-3-1-2-1-2-2" data-name="hours line">
+                            Daily · 12:00–01:00
+                        </p>
+<p data-kid="2-3-1-2-1-2-3" data-name="location line">
+                            Dubai, UAE
+                        </p>
+<a class="mora-menu-link mt-4 inline-block border-b border-[var(--mora-candle)]/35 pb-1 text-[11px] uppercase tracking-[.12em]" data-kid="2-3-1-2-1-2-4" data-name="directions link" href="https://www.google.com/maps/search/?api=1&amp;query=Jebel+Ali+Recreation+Club+Dubai" rel="noreferrer" target="_blank">
+                            Directions
+                            <i aria-hidden="true" class="ti ti-arrow-up-right ml-1" data-kid="2-3-1-2-1-2-4-1" data-name="arrow-up-right icon">
+</i>
+</a>
+</div>
+</div>
+<div data-kid="2-3-1-2-2" data-name="footer explore column">
+<p class="mora-kicker text-[var(--mora-brass)]" data-kid="2-3-1-2-2-1" data-name="explore kicker text">
+                        Explore
+                    </p>
+<div class="mt-5 grid gap-3 leading-6 text-[var(--mora-candle)]/68" data-kid="2-3-1-2-2-2" data-name="explore links list">
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-2-2-1" data-name="menu link" href="#food">
+                            Menu
+                        </a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-2-2-2" data-name="about link" href="#story">
+                            About
+                        </a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-2-2-3" data-name="bar experience link" href="#bar">
+                            Bar experience
+                        </a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-2-2-4" data-name="gallery link" href="#gallery">
+                            Gallery
+                        </a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-2-2-5" data-name="celebrations link" href="#contact">
+                            Private celebrations
+                        </a>
+</div>
+</div>
+<div data-kid="2-3-1-2-3" data-name="footer social column">
+<p class="mora-kicker text-[var(--mora-brass)]" data-kid="2-3-1-2-3-1" data-name="social kicker text">
+                        Keep in touch
+                    </p>
+<div class="mt-5 grid gap-3 leading-6 text-[var(--mora-candle)]/68" data-kid="2-3-1-2-3-2" data-name="social links list">
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-3-2-1" data-name="instagram link" href="https://www.instagram.com/chouseuae/" rel="noreferrer" target="_blank">
+                            Instagram
+                            <i aria-hidden="true" class="ti ti-instagram ml-1" data-kid="2-3-1-2-3-2-1-1" data-name="instagram icon">
+</i>
+</a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-3-2-2" data-name="phone link" href="tel:+971522185569">
+                            +971 52 218 5569
+                        </a>
+<a class="mora-menu-link w-fit" data-kid="2-3-1-2-3-2-3" data-name="email link" href="mailto:hello@moradubai.ae">
+                            hello@moradubai.ae
+                        </a>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 border-t border-[var(--mora-candle)]/25 pt-6 text-[10px] uppercase tracking-[.14em] text-[var(--mora-candle)]/52 sm:flex-row sm:items-center sm:justify-between" data-kid="2-3-1-3" data-name="copyright info bar">
+<span data-kid="2-3-1-3-1" data-name="copyright text">
+                    © C HOUSE Dubai
+                </span>
+<span data-kid="2-3-1-3-2" data-name="reservation advice">
+                    Reservations recommended for dinner
+                </span>
+<span data-kid="2-3-1-3-3" data-name="legal links">
+                    Privacy · Accessibility
+                </span>
+</div>
+</div>
+</footer>
+<button aria-label="Close reservation panel" class="mora-scrim fixed inset-0 z-[70] bg-[var(--mora-espresso)]/75" data-kid="2-4" data-name="scrim overlay for drawers" id="mora-scrim" type="button">
+</button>
+<aside aria-hidden="true" aria-labelledby="reservation-heading" aria-modal="true" class="mora-drawer fixed bottom-0 right-0 top-0 z-[75] flex w-full max-w-[520px] flex-col overflow-y-auto bg-[var(--mora-olive)] p-6 text-[var(--mora-candle)] shadow-2xl sm:p-8" data-kid="2-5" data-name="reservation drawer panel" id="reservation-drawer" role="dialog">
+<div class="flex items-start justify-between border-b border-[var(--mora-candle)]/25 pb-6" data-kid="2-5-1" data-name="drawer header">
+<div data-kid="2-5-1-1" data-name="drawer header content">
+<p class="mora-kicker text-[var(--mora-terracotta)]" data-kid="2-5-1-1-1" data-name="drawer kicker">
+                    A place at the table
+                </p>
+<h2 class="mora-serif mt-5 text-5xl leading-none" data-kid="2-5-1-1-2" data-name="drawer title" id="reservation-heading">
+                    Reserve a table.
+                </h2>
+</div>
+<button aria-label="Close reservation panel" class="inline-flex h-11 w-11 items-center justify-center border border-[var(--mora-candle)]/40 text-xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-5-1-2" data-name="close button" id="close-reservation" type="button">
+<i aria-hidden="true" class="ti ti-x" data-kid="2-5-1-2-1" data-name="close icon">
+</i>
+</button>
+</div>
+<p class="mt-7 max-w-[390px] text-sm leading-6 text-[var(--mora-candle)]/72" data-kid="2-5-2" data-name="drawer description">
+            Tell us when you’d like to come in. We’ll confirm your table by phone or email.
+        </p>
+<form class="mt-8 grid gap-5" data-kid="2-5-3" data-name="reservation form" id="reservation-form" novalidate="">
+<div class="grid grid-cols-2 gap-4" data-kid="2-5-3-1" data-name="guest and date row">
+<label class="grid gap-2 text-[10px] font-bold uppercase tracking-[.14em]" data-kid="2-5-3-1-1" data-name="guests label">
+                    Guests
+                    <select class="mora-input mt-1 h-12 px-3 text-sm font-normal normal-case tracking-normal" data-kid="2-5-3-1-1-1" data-name="guests select" name="guests">
+<option data-kid="2-5-3-1-1-1-1" data-name="option 1">
+                            2 guests
+                        </option>
+<option data-kid="2-5-3-1-1-1-2" data-name="option 2">
+                            3 guests
+                        </option>
+<option data-kid="2-5-3-1-1-1-3" data-name="option 3">
+                            4 guests
+                        </option>
+<option data-kid="2-5-3-1-1-1-4" data-name="option 4">
+                            5 guests
+                        </option>
+<option data-kid="2-5-3-1-1-1-5" data-name="option 5">
+                            6+ guests
+                        </option>
+</select>
+</label>
+<label class="grid gap-2 text-[10px] font-bold uppercase tracking-[.14em]" data-kid="2-5-3-1-2" data-name="date label">
+                    Date
+                    <input class="mora-input mt-1 h-12 px-3 text-sm font-normal normal-case tracking-normal" data-kid="2-5-3-1-2-1" data-name="date input" name="date" required="" type="date"/>
+</label>
+</div>
+<label class="grid gap-2 text-[10px] font-bold uppercase tracking-[.14em]" data-kid="2-5-3-2" data-name="time select label">
+                Preferred time
+                <select class="mora-input mt-1 h-12 px-3 text-sm font-normal normal-case tracking-normal" data-kid="2-5-3-2-1" data-name="time select" name="time">
+<option data-kid="2-5-3-2-1-1" data-name="time option 1">
+                        19:00
+                    </option>
+<option data-kid="2-5-3-2-1-2" data-name="time option 2">
+                        19:30
+                    </option>
+<option data-kid="2-5-3-2-1-3" data-name="time option 3">
+                        20:00
+                    </option>
+<option data-kid="2-5-3-2-1-4" data-name="time option 4">
+                        20:30
+                    </option>
+<option data-kid="2-5-3-2-1-5" data-name="time option 5">
+                        21:00
+                    </option>
+<option data-kid="2-5-3-2-1-6" data-name="time option 6">
+                        21:45
+                    </option>
+</select>
+</label>
+<label class="grid gap-2 text-[10px] font-bold uppercase tracking-[.14em]" data-kid="2-5-3-3" data-name="name input label">
+                Name
+                <input autocomplete="name" class="mora-input mt-1 h-12 px-3 text-sm font-normal normal-case tracking-normal placeholder:text-[var(--mora-candle)]/42" data-kid="2-5-3-3-1" data-name="name input" name="name" placeholder="Your name" required="" type="text"/>
+</label>
+<label class="grid gap-2 text-[10px] font-bold uppercase tracking-[.14em]" data-kid="2-5-3-4" data-name="contact input label">
+                Mobile or email
+                <input autocomplete="email" class="mora-input mt-1 h-12 px-3 text-sm font-normal normal-case tracking-normal placeholder:text-[var(--mora-candle)]/42" data-kid="2-5-3-4-1" data-name="contact input" name="contact" placeholder="How should we reach you?" required="" type="text"/>
+</label>
+<button class="mora-primary mt-2 flex h-14 items-center justify-center rounded-[2px] px-5 text-[10px] font-bold uppercase tracking-[.16em] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-dynamic="true" data-kid="2-5-3-5" data-name="form submit button" data-reason="text and state toggled by script during check" id="reservation-submit" type="submit">
+<span data-dynamic="true" data-kid="2-5-3-5-1" data-name="button label" data-reason="text updated during check" id="reservation-submit-label">
+                    Check availability
+                </span>
+<i aria-hidden="true" class="ti ti-arrow-up-right ml-5 text-sm" data-kid="2-5-3-5-2" data-name="arrow-up-right icon">
+</i>
+</button>
+<div aria-live="polite" class="border-t border-[var(--mora-candle)]/25 pt-5 text-sm leading-6 text-[var(--mora-candle)]/76" data-dynamic="true" data-kid="2-5-3-6" data-name="reservation status message" data-reason="text updated by script during form submission" id="reservation-status" role="status">
+                Choose a date and time to check availability.
+            </div>
+<div class="hidden border-l-2 border-[var(--mora-terracotta)] pl-4 text-xs leading-5 text-[var(--mora-candle)]/72" data-dynamic="true" data-kid="2-5-3-7" data-name="alternate times message" data-reason="visibility toggled by script" id="reservation-alt">
+                That time is full. Try 19:30 or 21:45, or call us for larger tables:
+                <a class="border-b border-[var(--mora-candle)]/45" data-kid="2-5-3-7-1" data-name="alternate phone link" href="tel:+971522185569">
+                    +971 52 218 5569
+                </a>
+                .
+            </div>
+<div class="hidden border-l-2 border-[var(--mora-terracotta)] pl-4 text-xs leading-5 text-[var(--mora-candle)]/72" data-dynamic="true" data-kid="2-5-3-8" data-name="reservation error message" data-reason="visibility toggled by script" id="reservation-error">
+                We couldn’t send that request. Please call +971 52 218 5569 and we’ll help.
+            </div>
+<div aria-hidden="true" class="mora-loading-rule h-px bg-[var(--mora-brass)]" data-dynamic="true" data-kid="2-5-3-9" data-name="loading progress rule" data-reason="animation state toggled by script" id="reservation-loading-rule">
+</div>
+</form>
+<p class="mt-auto pt-10 text-[10px] uppercase tracking-[.14em] text-[var(--mora-candle)]/45" data-kid="2-5-4" data-name="footer disclaimer">
+            Reservations recommended for dinner · open daily 12:00–01:00
+        </p>
+</aside>
+<div aria-hidden="true" class="mora-mobile-menu fixed inset-0 z-[65] flex flex-col bg-[var(--mora-olive)] px-5 py-6 text-[var(--mora-candle)] sm:px-8" data-kid="2-6" data-name="mobile menu drawer" id="mobile-menu">
+<div class="flex items-center justify-between border-b border-[var(--mora-candle)]/25 pb-5" data-kid="2-6-1" data-name="menu header">
+<a aria-label="C HOUSE home" class="mora-serif text-[2rem] leading-none tracking-[-.05em]" data-kid="2-6-1-1" data-name="home link" href="#home">
+                C HOUSE
+            </a>
+<button aria-label="Close menu" class="inline-flex h-11 w-11 items-center justify-center border border-[var(--mora-candle)]/45 text-xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-1-2" data-name="close menu button" id="close-mobile-menu" type="button">
+<i aria-hidden="true" class="ti ti-x" data-kid="2-6-1-2-1" data-name="close icon">
+</i>
+</button>
+</div>
+<nav aria-label="Mobile links" class="flex flex-col pt-16" data-kid="2-6-2" data-name="mobile navigation links">
+<a class="border-b border-[var(--mora-candle)]/22 py-5 text-3xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-2-1" data-name="menu link" href="#food">
+                Menu
+                <span class="float-right text-base" data-kid="2-6-2-1-1" data-name="index number">
+                    01
+                </span>
+</a>
+<a class="border-b border-[var(--mora-candle)]/22 py-5 text-3xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-2-2" data-name="about link" href="#story">
+                About
+                <span class="float-right text-base" data-kid="2-6-2-2-1" data-name="index number">
+                    02
+                </span>
+</a>
+<a class="border-b border-[var(--mora-candle)]/22 py-5 text-3xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-2-3" data-name="bar experience link" href="#bar">
+                Bar experience
+                <span class="float-right text-base" data-kid="2-6-2-3-1" data-name="index number">
+                    03
+                </span>
+</a>
+<a class="border-b border-[var(--mora-candle)]/22 py-5 text-3xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-2-4" data-name="gallery link" href="#gallery">
+                Gallery
+                <span class="float-right text-base" data-kid="2-6-2-4-1" data-name="index number">
+                    04
+                </span>
+</a>
+<a class="border-b border-[var(--mora-candle)]/22 py-5 text-3xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-2-5" data-name="contact link" href="#contact">
+                Contact
+                <span class="float-right text-base" data-kid="2-6-2-5-1" data-name="index number">
+                    05
+                </span>
+</a>
+</nav>
+<div class="mt-auto flex items-end justify-between gap-6 border-t border-[var(--mora-candle)]/25 pt-6" data-kid="2-6-3" data-name="menu footer">
+<div data-kid="2-6-3-1" data-name="menu footer address">
+<p class="mora-kicker text-[var(--mora-terracotta)]" data-kid="2-6-3-1-1" data-name="menu address title">
+                    Jebel Ali · Dubai
+                </p>
+<p class="mt-3 text-xs text-[var(--mora-candle)]/65" data-kid="2-6-3-1-2" data-name="menu hours">
+                    Open daily · 12:00–01:00
+                </p>
+</div>
+<button class="mora-primary px-5 py-4 text-[10px] font-bold uppercase tracking-[.14em] focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-6-3-2" data-name="menu reserve button" data-open-reservation="" type="button">
+                Reserve
+                <i aria-hidden="true" class="ti ti-arrow-up-right ml-4" data-kid="2-6-3-2-1" data-name="arrow-up-right icon">
+</i>
+</button>
+</div>
+</div>
+<div aria-hidden="true" aria-labelledby="lightbox-caption" aria-modal="true" class="mora-lightbox fixed inset-0 z-[90] flex items-center justify-center bg-[var(--mora-espresso)] px-5 py-6 text-[var(--mora-candle)] sm:px-10" data-dynamic="true" data-kid="2-7" data-name="lightbox container" data-reason="visible/hidden toggle state" hidden="" id="gallery-lightbox" role="dialog">
+<button aria-label="Close gallery viewer" class="absolute right-5 top-5 inline-flex h-12 w-12 items-center justify-center border border-[var(--mora-candle)]/55 text-2xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-7-1" data-name="close button" id="lightbox-close" type="button">
+<i aria-hidden="true" class="ti ti-x" data-kid="2-7-1-1" data-name="close icon">
+</i>
+</button>
+<button aria-label="Previous gallery image" class="absolute left-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-[var(--mora-candle)]/45 text-2xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4 sm:left-8" data-kid="2-7-2" data-name="previous image button" id="lightbox-prev" type="button">
+<i aria-hidden="true" class="ti ti-chevron-left" data-kid="2-7-2-1" data-name="chevron left icon">
+</i>
+</button>
+<div class="flex max-w-[1120px] flex-col items-center" data-kid="2-7-3" data-name="lightbox inner content">
+<img alt="Warm restaurant interior, SAAD EMRIS on Pexels" class="mora-lightbox-image border border-[var(--mora-candle)]/20" data-dynamic="true" data-kid="2-7-3-1" data-name="lightbox image" data-reason="src and alt updated by interaction" decoding="async" id="lightbox-image" loading="lazy" src="https://images.pexels.com/photos/17086329/pexels-photo-17086329.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200&amp;q=80"/>
+<div class="mt-5 flex w-full items-start justify-between gap-8 border-t border-[var(--mora-candle)]/25 pt-4" data-kid="2-7-3-2" data-name="lightbox footer info">
+<p class="text-[11px] uppercase tracking-[.15em] text-[var(--mora-candle)]/75" data-dynamic="true" data-kid="2-7-3-2-1" data-name="lightbox caption" data-reason="text updated by interaction" id="lightbox-caption">
+                    19:42 · second round
+                </p>
+<p class="text-[11px] uppercase tracking-[.15em] text-[var(--mora-brass)]" data-dynamic="true" data-kid="2-7-3-2-2" data-name="lightbox counter" data-reason="text updated by interaction" id="lightbox-count">
+                    01 / 07
+                </p>
+</div>
+</div>
+<button aria-label="Next gallery image" class="absolute right-4 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-[var(--mora-candle)]/45 text-2xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4 sm:right-8" data-kid="2-7-4" data-name="next image button" id="lightbox-next" type="button">
+<i aria-hidden="true" class="ti ti-chevron-right" data-kid="2-7-4-1" data-name="chevron right icon">
+</i>
+</button>
+</div>
+<div aria-hidden="false" class="mora-reserve-dock fixed inset-x-4 bottom-4 z-[55] md:hidden is-visible" data-kid="2-8" data-name="floating reserve dock button" id="reserve-dock">
+<button class="mora-fold mora-fold-candle flex w-full items-center justify-between bg-[var(--mora-clay)] px-5 py-4 text-left text-[var(--mora-espresso)] shadow-xl focus-visible:outline-2 focus-visible:outline-[var(--mora-candle)] focus-visible:outline-offset-4" data-kid="2-8-1" data-name="dock reserve button" data-open-reservation="" type="button">
+<span data-kid="2-8-1-1" data-name="button text container">
+<span class="block text-[10px] font-bold uppercase tracking-[.16em]" data-kid="2-8-1-1-1" data-name="dock title">
+                    A place at C HOUSE
+                </span>
+<span class="mt-1 block text-xs" data-kid="2-8-1-1-2" data-name="dock subtitle">
+                    Reserve a table
+                </span>
+</span>
+<i aria-hidden="true" class="ti ti-arrow-up-right text-lg" data-kid="2-8-1-2" data-name="arrow-up-right icon">
+</i>
+</button>
+</div>
+</div>
+<script>
+    (() => {
+  const page = document.getElementById('mora-page');
+  if (!page) return;
+
+  const nav = document.getElementById('mora-nav');
+  const setNavState = () => nav.classList.toggle('is-scrolled', window.scrollY > 24);
+  setNavState();
+  window.addEventListener('scroll', setNavState, { passive: true });
+
+  const revealItems = page.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    revealItems.forEach((item) => revealObserver.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+  }
+
+  const drawer = document.getElementById('reservation-drawer');
+  const scrim = document.getElementById('mora-scrim');
+  const drawerClose = document.getElementById('close-reservation');
+  const menu = document.getElementById('mobile-menu');
+  const menuButton = document.getElementById('mobile-menu-button');
+  const menuClose = document.getElementById('close-mobile-menu');
+  let lastFocus = null;
+
+  const syncLock = () => {
+    const locked = drawer.classList.contains('is-open') || menu.classList.contains('is-open') || !document.getElementById('gallery-lightbox').hasAttribute('hidden');
+    document.body.classList.toggle('mora-lock', locked);
+  };
+  const openDrawer = () => {
+    lastFocus = document.activeElement;
+    menu.classList.remove('is-open');
+    menu.setAttribute('aria-hidden', 'true');
+    menuButton.setAttribute('aria-expanded', 'false');
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    scrim.classList.add('is-open');
+    syncLock();
+    window.setTimeout(() => drawerClose.focus(), 360);
+  };
+  const closeDrawer = () => {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    scrim.classList.remove('is-open');
+    syncLock();
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  };
+  const openMenu = () => {
+    lastFocus = document.activeElement;
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    scrim.classList.remove('is-open');
+    menu.classList.add('is-open');
+    menu.setAttribute('aria-hidden', 'false');
+    menuButton.setAttribute('aria-expanded', 'true');
+    syncLock();
+    window.setTimeout(() => menuClose.focus(), 360);
+  };
+  const closeMenu = () => {
+    menu.classList.remove('is-open');
+    menu.setAttribute('aria-hidden', 'true');
+    menuButton.setAttribute('aria-expanded', 'false');
+    syncLock();
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  };
+  page.querySelectorAll('[data-open-reservation]').forEach((button) => button.addEventListener('click', openDrawer));
+  drawerClose.addEventListener('click', closeDrawer);
+  scrim.addEventListener('click', closeDrawer);
+  menuButton.addEventListener('click', () => menu.classList.contains('is-open') ? closeMenu() : openMenu());
+  menuClose.addEventListener('click', closeMenu);
+  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  const reservationForm = document.getElementById('reservation-form');
+  const reservationSubmit = document.getElementById('reservation-submit');
+  const reservationSubmitLabel = document.getElementById('reservation-submit-label');
+  const reservationStatus = document.getElementById('reservation-status');
+  const reservationAlt = document.getElementById('reservation-alt');
+  const reservationError = document.getElementById('reservation-error');
+  const loadingRule = document.getElementById('reservation-loading-rule');
+  reservationForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!reservationForm.reportValidity()) return;
+    reservationSubmit.disabled = true;
+    reservationSubmitLabel.textContent = 'Checking availability';
+    loadingRule.classList.add('is-loading');
+    reservationStatus.textContent = 'Checking your preferred table time…';
+    reservationAlt.classList.add('hidden');
+    reservationError.classList.add('hidden');
+    window.setTimeout(() => {
+      reservationSubmit.disabled = false;
+      reservationSubmitLabel.textContent = 'Check availability';
+      loadingRule.classList.remove('is-loading');
+      const time = reservationForm.elements.time.value;
+      if (time === '20:30') {
+        reservationStatus.textContent = 'That first choice is not available just now.';
+        reservationAlt.classList.remove('hidden');
+      } else {
+        reservationStatus.textContent = 'Request received. We’ll confirm your table by phone or email.';
+      }
+    }, 850);
+  });
+
+  const foodData = [
+    { src: 'https://images.pexels.com/photos/14538480/pexels-photo-14538480.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80', alt: 'Hands sharing pizza and plates at a lively table, Doğu Tuncer on Pexels', name: 'Burrata & roasted tomatoes', meta: 'Olive oil · warm bread · antipasti' },
+    { src: './food.png', alt: 'Handmade pasta twirled on a white ceramic plate with tomato and parmesan, Erwan Hesry on Unsplash', name: 'Truffle tagliatelle', meta: 'Warm parmesan · handmade pasta' },
+    { src: 'https://images.pexels.com/photos/33158334/pexels-photo-33158334.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80', alt: 'Fresh Italian pizza with blistered crust and basil, damla selen demir on Pexels', name: 'Blistered margherita', meta: 'Tomato · basil · shared hands' },
+    { src: 'https://images.unsplash.com/photo-1605851086486-2bfb45e926d9?auto=format&w=1200&q=80&fit=crop', alt: 'Italian grilled meat with roasted vegetables and red wine, sergey mikheev on Unsplash', name: 'Grilled beef', meta: 'Seasonal vegetables · red wine' },
+    { src: 'https://images.unsplash.com/photo-1661587781420-dc427db4ccda?auto=format&w=1000&q=80&fit=crop', alt: 'Dessert and shared plates being prepared at a restaurant table, Filipp Romanovski on Unsplash', name: 'Tiramisù', meta: 'Espresso · mascarpone · to share' }
+  ];
+  const foodRows = page.querySelectorAll('[data-food-index]');
+  const foodImage = document.getElementById('food-image');
+  const foodName = document.getElementById('food-dish-name');
+  const foodMeta = document.getElementById('food-dish-meta');
+  let foodTimer;
+  const updateFood = (index) => {
+    const item = foodData[index];
+    foodRows.forEach((row) => {
+      const active = Number(row.dataset.foodIndex) === index;
+      row.classList.toggle('is-active', active);
+      row.setAttribute('aria-selected', String(active));
+      row.querySelector('.mora-food-rule').classList.toggle('w-8', active);
+      row.querySelector('.mora-food-rule').classList.toggle('w-0', !active);
+    });
+    foodImage.classList.add('mora-image-changing');
+    window.clearTimeout(foodTimer);
+    foodTimer = window.setTimeout(() => {
+      foodImage.src = item.src;
+      foodImage.alt = item.alt;
+      foodName.textContent = item.name;
+      foodMeta.textContent = item.meta;
+      foodImage.classList.remove('mora-image-changing');
+    }, 120);
+  };
+  foodRows.forEach((row) => {
+    row.addEventListener('click', () => updateFood(Number(row.dataset.foodIndex)));
+    row.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') { event.preventDefault(); const next = (Number(row.dataset.foodIndex) + 1) % foodData.length; foodRows[next].focus(); updateFood(next); }
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') { event.preventDefault(); const next = (Number(row.dataset.foodIndex) - 1 + foodData.length) % foodData.length; foodRows[next].focus(); updateFood(next); }
+    });
+  });
+
+  const occasionData = [
+    { src: 'https://images.pexels.com/photos/17086329/pexels-photo-17086329.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Warm contemporary restaurant interior with olive seating and evening lamps, SAAD EMRIS on Pexels', caption: 'Lunch at MORA · easy plates, second espresso', copy: 'A quick plate if you need it; a second espresso if you don’t.' },
+    { src: 'https://images.pexels.com/photos/39215054/pexels-photo-39215054.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Bright aperitivo cocktail catching warm evening light, Nati on Pexels', caption: 'Aperitivo · bitter orange, small plates', copy: 'Aperol, bitter orange, small plates and an unhurried start.' },
+    { src: 'https://images.pexels.com/photos/30044364/pexels-photo-30044364.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Friends clinking wine glasses over dinner, Jeremy Li on Pexels', caption: 'Dinner at MORA · bottles made for passing around', copy: 'Pasta, proper mains and bottles made for passing around.' },
+    { src: 'https://images.pexels.com/photos/2072569/pexels-photo-2072569.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Couple sharing a warm dinner at an Italian restaurant, Elina Sazonova on Pexels', caption: 'Date night · low light, one corner table', copy: 'Low light, a corner table and dessert worth sharing.' },
+    { src: 'https://images.pexels.com/photos/5086623/pexels-photo-5086623.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Friends enjoying an animated dinner together, Jep Gambardella on Pexels', caption: 'Friends · one more round for the table', copy: 'Big tables, louder stories, one more round.' },
+    { src: 'https://images.pexels.com/photos/37307299/pexels-photo-37307299.jpeg?auto=compress&cs=tinysrgb&w=1100&q=80', alt: 'Lively group gathered around a warmly lit dinner table, Le Salama on Pexels', caption: 'Private celebrations · room to linger', copy: 'Dinner parties, birthdays and gatherings with room to linger.' }
+  ];
+  const occasionRows = page.querySelectorAll('[data-occasion-index]');
+  const occasionImage = document.getElementById('occasion-image');
+  const occasionCaption = document.getElementById('occasion-caption');
+  const occasionCopy = document.getElementById('occasion-copy');
+  let occasionTimer;
+  const updateOccasion = (index) => {
+    const item = occasionData[index];
+    occasionRows.forEach((row) => {
+      const active = Number(row.dataset.occasionIndex) === index;
+      row.classList.toggle('is-active', active);
+      row.setAttribute('aria-selected', String(active));
+    });
+    occasionImage.classList.add('mora-image-changing');
+    window.clearTimeout(occasionTimer);
+    occasionTimer = window.setTimeout(() => {
+      occasionImage.src = item.src;
+      occasionImage.alt = item.alt;
+      occasionCaption.textContent = item.caption;
+      occasionCopy.textContent = item.copy;
+      occasionImage.classList.remove('mora-image-changing');
+    }, 140);
+  };
+  occasionRows.forEach((row) => {
+    row.addEventListener('click', () => updateOccasion(Number(row.dataset.occasionIndex)));
+    row.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') { event.preventDefault(); const next = (Number(row.dataset.occasionIndex) + 1) % occasionData.length; occasionRows[next].focus(); updateOccasion(next); }
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') { event.preventDefault(); const next = (Number(row.dataset.occasionIndex) - 1 + occasionData.length) % occasionData.length; occasionRows[next].focus(); updateOccasion(next); }
+    });
+  });
+
+  const galleryData = [
+    { src: './gallery/1.png', alt: 'Interior dining booths with a decorative golden ring divider', caption: 'Interior dining booths' },
+    { src: './gallery/2.png', alt: 'Interior dining space with elegantly set tables', caption: 'Tables set for dinner' },
+    { src: './gallery/3.png', alt: 'Outdoor patio setting with woven chairs and a marble table', caption: 'Outdoor patio dining' },
+    { src: './gallery/4.png', alt: 'Interior dining booths beside warm golden lighting', caption: 'Evening interior ambiance' },
+    { src: './gallery/6.png', alt: 'Elegant crystal chandelier hanging in the dining area', caption: 'Golden chandelier' },
+    { src: './gallery/5.png', alt: 'Outdoor restaurant seating area with a large canopy at sunset', caption: 'Outdoor sunset seating' },
+    { src: './gallery/new6.png', alt: 'Interior dining lounge with white booths and wood paneled walls', caption: 'Interior dining lounge' }
+  ];
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCount = document.getElementById('lightbox-count');
+  const lightboxClose = document.getElementById('lightbox-close');
+  let galleryIndex = 0;
+  const paintGallery = () => {
+    const item = galleryData[galleryIndex];
+    lightboxImage.src = item.src;
+    lightboxImage.alt = item.alt;
+    lightboxCaption.textContent = item.caption;
+    lightboxCount.textContent = String(galleryIndex + 1).padStart(2, '0') + ' / ' + String(galleryData.length).padStart(2, '0');
+  };
+  const openGallery = (index) => {
+    lastFocus = document.activeElement;
+    galleryIndex = index;
+    paintGallery();
+    lightbox.removeAttribute('hidden');
+    lightbox.setAttribute('aria-hidden', 'false');
+    syncLock();
+    window.setTimeout(() => lightboxClose.focus(), 20);
+  };
+  const closeGallery = () => {
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.setAttribute('hidden', '');
+    syncLock();
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  };
+  page.querySelectorAll('[data-gallery-index]').forEach((button) => button.addEventListener('click', () => openGallery(Number(button.dataset.galleryIndex))));
+  document.getElementById('lightbox-prev').addEventListener('click', () => { galleryIndex = (galleryIndex - 1 + galleryData.length) % galleryData.length; paintGallery(); });
+  document.getElementById('lightbox-next').addEventListener('click', () => { galleryIndex = (galleryIndex + 1) % galleryData.length; paintGallery(); });
+  lightboxClose.addEventListener('click', closeGallery);
+  lightbox.addEventListener('click', (event) => { if (event.target === lightbox) closeGallery(); });
+
+  const reserveDock = document.getElementById('reserve-dock');
+  const heroReserve = document.getElementById('hero-reserve');
+  if ('IntersectionObserver' in window && heroReserve) {
+    const dockObserver = new IntersectionObserver(([entry]) => {
+      const shouldShow = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      reserveDock.classList.toggle('is-visible', shouldShow);
+      reserveDock.setAttribute('aria-hidden', String(!shouldShow));
+    }, { threshold: 0 });
+    dockObserver.observe(heroReserve);
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      if (!lightbox.hasAttribute('hidden')) closeGallery();
+      else if (drawer.classList.contains('is-open')) closeDrawer();
+      else if (menu.classList.contains('is-open')) closeMenu();
+    }
+  });
+})();
+</script>
+</div>
+</body>
+</html>
