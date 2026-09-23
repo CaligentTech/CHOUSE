@@ -59,7 +59,7 @@
       "created": "2026-08-29T06:41:04.189846+00:00",
       "modified": "2026-08-29T06:41:04.189846+00:00",
       "id": "var_f98b394d04e1",
-      "viewportScrollY": 7584
+      "viewportScrollY": 7579
     },
     "var_6af7d261dff6": {
       "type": "variant",
@@ -77,7 +77,7 @@
       "created": "2026-08-29T07:01:36.022813+00:00",
       "modified": "2026-08-29T07:35:01.034646+00:00",
       "id": "var_6af7d261dff6",
-      "viewportScrollY": 5
+      "viewportScrollY": 0
     }
   },
   "comments": [],
